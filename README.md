@@ -168,6 +168,13 @@ No desplegar sobre el servidor anterior sin completar [SECURITY-MIGRATION.md](SE
 
 ## Material visual
 
+La identidad utiliza los colores aprobados:
+
+- Azul principal: `#1c5476`
+- Azul secundario: `#7ba8c4`
+
+Los logotipos oficiales están en `public/images/unne-logo.png` y `public/images/unne-logo-white.png`. El símbolo derivado se utiliza únicamente como recurso de interfaz y favicon.
+
 El sitio usa ilustración abstracta y placeholders explícitos. No atribuye fotografías de stock a UNNE. Sustituirlos con:
 
 - retratos profesionales con proporción 4:5;

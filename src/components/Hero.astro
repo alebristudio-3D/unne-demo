@@ -47,14 +47,16 @@ const {
       )}
     </div>
     <div class:list={['hero-art', `art-${art}`]} aria-hidden="true">
+      <div class="brand-curve curve-one"></div>
+      <div class="brand-curve curve-two"></div>
       <div class="art-orbit orbit-one"></div>
       <div class="art-orbit orbit-two"></div>
       <div class="art-core">
-        <Icon name={art === 'sleep' ? 'moon' : art === 'care' ? 'heart' : 'brain'} size={72} />
+        <img src={withBase('/images/unne-symbol.png')} alt="" width="420" height="420" />
       </div>
       <div class="signal-line"></div>
-      <span class="art-label">Ciencia precisa</span>
-      <span class="art-label label-secondary">Atención humana</span>
+      <span class="art-label"><Icon name={art === 'sleep' ? 'moon' : 'brain'} size={15} /> Ciencia precisa</span>
+      <span class="art-label label-secondary"><Icon name="heart" size={15} /> Atención humana</span>
     </div>
   </div>
 </section>

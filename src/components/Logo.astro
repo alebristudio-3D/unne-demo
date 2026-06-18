@@ -1,24 +1,19 @@
 ---
 interface Props {
   compact?: boolean;
+  inverse?: boolean;
 }
-const { compact = false } = Astro.props;
+const { compact = false, inverse = false } = Astro.props;
 import { withBase } from '../data/site';
 ---
 
-<a class:list={['brand', { compact }]} href={withBase('/')} aria-label="UNNE, ir al inicio">
-  <svg class="brand-mark" viewBox="0 0 54 54" aria-hidden="true">
-    <defs>
-      <linearGradient id="logo-gradient" x1="5" y1="5" x2="49" y2="49">
-        <stop stop-color="#00A6E0" />
-        <stop offset="1" stop-color="#003166" />
-      </linearGradient>
-    </defs>
-    <rect x="2" y="2" width="50" height="50" rx="16" fill="url(#logo-gradient)" />
-    <path d="M9 29h7l3-10 6 20 5-17 4 10 3-7h8" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
-  </svg>
-  <span class="brand-copy">
-    <strong>UNNE</strong>
-    {!compact && <small>Neurología y Neurofisiología Especializada</small>}
-  </span>
+<a class:list={['brand', { compact, inverse }]} href={withBase('/')} aria-label="UNNE Ciencias Neurológicas, ir al inicio">
+  <img
+    class="brand-logo"
+    src={withBase(inverse ? '/images/unne-logo-white.png' : '/images/unne-logo.png')}
+    alt=""
+    width="2623"
+    height="900"
+    decoding="async"
+  />
 </a>
