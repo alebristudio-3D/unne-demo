@@ -1,0 +1,32 @@
+Options -Indexes
+RewriteEngine On
+
+# Las URLs de spam detectadas bajo ?u= deben responder como eliminadas.
+RewriteCond %{QUERY_STRING} (^|&)u= [NC]
+RewriteRule ^ - [G,L]
+
+# Redirecciones permanentes desde el sitio anterior.
+Redirect 301 /index.html /
+Redirect 301 /servicios.html /padecimientos/
+Redirect 301 /epilepsia.html /padecimientos/epilepsia/
+Redirect 301 /sueno.html /padecimientos/trastornos-del-sueno/
+Redirect 301 /movimiento.html /padecimientos/trastornos-del-movimiento/
+Redirect 301 /nosotros.html /nosotros/
+Redirect 301 /estudios.html /estudios/
+Redirect 301 /eventos.html /recursos/eventos/
+Redirect 301 /videos.html /recursos/videos/
+Redirect 301 /blog.html /recursos/blog/
+Redirect 301 /contacto.html /contacto/
+Redirect 301 /aviso_de_privacidad.html /aviso-de-privacidad/
+
+ErrorDocument 404 /404.html
+
+<IfModule mod_headers.c>
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=()"
+  Header always set X-Frame-Options "SAMEORIGIN"
+  Header always set Content-Security-Policy "default-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'; object-src 'none'; img-src 'self' data:; font-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; connect-src 'self'"
+  SetEnvIfExpr "%{QUERY_STRING} != ''" has_query
+  Header set X-Robots-Tag "noindex, nofollow" env=has_query
+</IfModule>

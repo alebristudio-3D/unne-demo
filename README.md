@@ -140,6 +140,22 @@ Antes de activar proveedores no esenciales, revisar consentimiento y aviso de pr
 
 El resultado de `npm run build` es estático y queda en `dist/`.
 
+### Demo en GitHub Pages
+
+El workflow `.github/workflows/deploy-pages.yml` valida y despliega automáticamente la rama `main` en:
+
+`https://alebristudio-3d.github.io/unne-demo/`
+
+La demo usa:
+
+```env
+SITE_MODE=preview
+PUBLIC_SITE_URL=https://alebristudio-3d.github.io
+PUBLIC_BASE_PATH=/unne-demo
+```
+
+Esto mantiene la demo bloqueada para buscadores y hace que navegación, assets, canonical y sitemap respeten la subruta del repositorio. Para un dominio definitivo, sustituir `PUBLIC_SITE_URL`, dejar `PUBLIC_BASE_PATH=/` y completar las validaciones de producción.
+
 Para Apache:
 
 1. Desplegar en infraestructura limpia.

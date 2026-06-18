@@ -1,5 +1,6 @@
 ---
 import Icon from './Icon.astro';
+import { withBase } from '../data/site';
 interface Props {
   slug: string;
   title: string;
@@ -12,7 +13,7 @@ const icon = order === 2 ? 'moon' : order === 3 ? 'muscle' : 'brain';
 
 <article class="card condition-card">
   <div class="card-icon"><Icon name={icon} /></div>
-  <h3><a href={`/padecimientos/${slug}/`}>{title}</a></h3>
+  <h3><a href={withBase(`/padecimientos/${slug}/`)}>{title}</a></h3>
   <p>{summary}</p>
-  <a class="text-link" href={`/padecimientos/${slug}/`}>Conocer más <Icon name="arrow" size={17} /></a>
+  <a class="text-link" href={withBase(`/padecimientos/${slug}/`)}>Conocer más <Icon name="arrow" size={17} /></a>
 </article>

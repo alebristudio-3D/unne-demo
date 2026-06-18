@@ -6,6 +6,7 @@ import StudyCard from '../../components/StudyCard.astro';
 import Faq from '../../components/Faq.astro';
 import CtaBand from '../../components/CtaBand.astro';
 import Icon from '../../components/Icon.astro';
+import { withBase } from '../../data/site';
 
 const studies = (await getCollection('studies'))
   .filter((item) => item.data.status === 'published')
@@ -78,7 +79,7 @@ const faqs = [
         <p class="eyebrow">¿Ya tienes una orden médica?</p>
         <h2>Ten a la mano el nombre exacto del estudio</h2>
         <p>Al solicitar información, comparte únicamente el nombre del estudio y tus datos de contacto. No envíes expedientes ni información clínica sensible desde el formulario general.</p>
-        <a class="button button-primary" href="/agendar/" data-track="request_study_info">Solicitar información</a>
+        <a class="button button-primary" href={withBase('/agendar/')} data-track="request_study_info">Solicitar información</a>
       </div>
       <div class="content-panel">
         <h2>Antes de acudir</h2>

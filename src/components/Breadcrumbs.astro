@@ -7,6 +7,7 @@ interface Props {
   items: Crumb[];
 }
 const { items } = Astro.props;
+import { withBase } from '../data/site';
 const schema = {
   '@context': 'https://schema.org',
   '@type': 'BreadcrumbList',
@@ -14,7 +15,7 @@ const schema = {
     '@type': 'ListItem',
     position: index + 1,
     name: item.label,
-    ...(item.href ? { item: new URL(item.href, Astro.site).toString() } : {})
+    ...(item.href ? { item: new URL(withBase(item.href), Astro.site).toString() } : {})
   }))
 };
 ---
@@ -23,7 +24,7 @@ const schema = {
   <ol>
     {items.map((item, index) => (
       <li>
-        {item.href ? <a href={item.href}>{item.label}</a> : <span aria-current="page">{item.label}</span>}
+        {item.href ? <a href={withBase(item.href)}>{item.label}</a> : <span aria-current="page">{item.label}</span>}
         {index < items.length - 1 && <span aria-hidden="true">/</span>}
       </li>
     ))}

@@ -5,6 +5,7 @@ import Hero from '../../components/Hero.astro';
 import Icon from '../../components/Icon.astro';
 import PendingPanel from '../../components/PendingPanel.astro';
 import CtaBand from '../../components/CtaBand.astro';
+import { withBase } from '../../data/site';
 
 const doctors = await getCollection('doctors');
 const published = doctors.filter((doctor) => doctor.data.status === 'published');
@@ -37,7 +38,7 @@ const drafts = doctors.filter((doctor) => doctor.data.status === 'draft');
               </div>
               <h2>{doctor.data.name}</h2>
               {doctor.data.role && <p>{doctor.data.role}</p>}
-              <a class="text-link" href={`/especialistas/${doctor.id}/`}>Ver perfil <Icon name="arrow" size={17} /></a>
+              <a class="text-link" href={withBase(`/especialistas/${doctor.id}/`)}>Ver perfil <Icon name="arrow" size={17} /></a>
             </article>
           ))}
         </div>
