@@ -3,9 +3,10 @@ interface Props {
   compact?: boolean;
 }
 const { compact = false } = Astro.props;
+import { withBase } from '../data/site';
 ---
 
-<a class:list={['brand', { compact }]} href="/" aria-label="UNNE, ir al inicio">
+<a class:list={['brand', { compact }]} href={withBase('/')} aria-label="UNNE, ir al inicio">
   <svg class="brand-mark" viewBox="0 0 54 54" aria-hidden="true">
     <defs>
       <linearGradient id="logo-gradient" x1="5" y1="5" x2="49" y2="49">

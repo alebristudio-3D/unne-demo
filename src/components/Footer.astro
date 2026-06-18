@@ -1,7 +1,7 @@
 ---
 import Icon from './Icon.astro';
 import Logo from './Logo.astro';
-import { clinicConfig } from '../data/site';
+import { clinicConfig, withBase } from '../data/site';
 const year = new Date().getFullYear();
 ---
 
@@ -14,19 +14,19 @@ const year = new Date().getFullYear();
     <div>
       <h2>Atención</h2>
       <ul>
-        <li><a href="/padecimientos/">Padecimientos</a></li>
-        <li><a href="/estudios/">Estudios</a></li>
-        <li><a href="/especialistas/">Especialistas</a></li>
-        <li><a href="/pacientes/guia-para-tu-cita/">Guía para tu cita</a></li>
+        <li><a href={withBase('/padecimientos/')}>Padecimientos</a></li>
+        <li><a href={withBase('/estudios/')}>Estudios</a></li>
+        <li><a href={withBase('/especialistas/')}>Especialistas</a></li>
+        <li><a href={withBase('/pacientes/guia-para-tu-cita/')}>Guía para tu cita</a></li>
       </ul>
     </div>
     <div>
       <h2>UNNE</h2>
       <ul>
-        <li><a href="/nosotros/">Nosotros</a></li>
-        <li><a href="/recursos/">Recursos</a></li>
-        <li><a href="/contacto/">Contacto</a></li>
-        <li><a href="/aviso-de-privacidad/">Aviso de privacidad</a></li>
+        <li><a href={withBase('/nosotros/')}>Nosotros</a></li>
+        <li><a href={withBase('/recursos/')}>Recursos</a></li>
+        <li><a href={withBase('/contacto/')}>Contacto</a></li>
+        <li><a href={withBase('/aviso-de-privacidad/')}>Aviso de privacidad</a></li>
       </ul>
     </div>
     <div>
@@ -44,7 +44,7 @@ const year = new Date().getFullYear();
   <div class="container footer-bottom">
     <p>© {year} UNNE. Información educativa; no sustituye una consulta médica.</p>
     <div>
-      <a href="/terminos-de-uso/">Términos</a>
+      <a href={withBase('/terminos-de-uso/')}>Términos</a>
       <a href={clinicConfig.social.instagram} target="_blank" rel="noopener">Instagram</a>
     </div>
   </div>

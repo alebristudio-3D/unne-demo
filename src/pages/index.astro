@@ -8,7 +8,7 @@ import ConditionCard from '../components/ConditionCard.astro';
 import StudyCard from '../components/StudyCard.astro';
 import Faq from '../components/Faq.astro';
 import CtaBand from '../components/CtaBand.astro';
-import { clinicConfig } from '../data/site';
+import { clinicConfig, withBase } from '../data/site';
 
 const conditions = (await getCollection('conditions'))
   .filter((item) => item.data.status === 'published')
@@ -56,22 +56,22 @@ const faqs = [
 
   <section class="container" aria-label="Accesos rápidos">
     <div class="need-grid">
-      <a class="need-card" href="/agendar/">
+      <a class="need-card" href={withBase('/agendar/')}>
         <Icon name="heart" />
         <strong>Necesito una consulta</strong>
         <span>Solicita orientación para una valoración neurológica.</span>
       </a>
-      <a class="need-card" href="/estudios/">
+      <a class="need-card" href={withBase('/estudios/')}>
         <Icon name="document" />
         <strong>Me indicaron un estudio</strong>
         <span>Encuentra información general y requisitos por confirmar.</span>
       </a>
-      <a class="need-card" href="/padecimientos/trastornos-del-sueno/">
+      <a class="need-card" href={withBase('/padecimientos/trastornos-del-sueno/')}>
         <Icon name="moon" />
         <strong>Quiero dormir mejor</strong>
         <span>Conoce alteraciones del sueño y su evaluación.</span>
       </a>
-      <a class="need-card" href="/especialistas/">
+      <a class="need-card" href={withBase('/especialistas/')}>
         <Icon name="brain" />
         <strong>Busco un especialista</strong>
         <span>Consulta la estructura de los perfiles médicos.</span>
@@ -118,7 +118,7 @@ const faqs = [
         ))}
       </div>
       <div class="section-action">
-        <a class="button button-secondary" href="/estudios/">Ver todos los estudios <Icon name="arrow" size={18} /></a>
+        <a class="button button-secondary" href={withBase('/estudios/')}>Ver todos los estudios <Icon name="arrow" size={18} /></a>
       </div>
     </div>
   </section>
@@ -196,7 +196,7 @@ const faqs = [
           title="Conoce a quienes te acompañan"
           text="Los perfiles individuales están preparados, pero no se publicarán como definitivos hasta verificar pertenencia, credenciales y disponibilidad."
         />
-        <a class="button button-secondary" href="/especialistas/">Ver especialistas</a>
+        <a class="button button-secondary" href={withBase('/especialistas/')}>Ver especialistas</a>
       </div>
       <div class="content-panel">
         <p class="eyebrow">Perfiles responsables</p>

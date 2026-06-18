@@ -1,5 +1,6 @@
 ---
 import Icon from './Icon.astro';
+import { withBase } from '../data/site';
 
 interface Props {
   eyebrow?: string;
@@ -35,12 +36,12 @@ const {
       {(primaryLabel || secondaryLabel) && (
         <div class="button-row">
           {primaryLabel && primaryHref && (
-            <a class="button button-primary" href={primaryHref} data-track="request_appointment" data-location="hero">
+            <a class="button button-primary" href={withBase(primaryHref)} data-track="request_appointment" data-location="hero">
               {primaryLabel}<Icon name="arrow" size={18} />
             </a>
           )}
           {secondaryLabel && secondaryHref && (
-            <a class="button button-secondary" href={secondaryHref}>{secondaryLabel}</a>
+            <a class="button button-secondary" href={withBase(secondaryHref)}>{secondaryLabel}</a>
           )}
         </div>
       )}

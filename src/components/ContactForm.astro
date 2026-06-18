@@ -1,5 +1,5 @@
 ---
-import { clinicConfig, formEnabled, formEndpoint } from '../data/site';
+import { clinicConfig, formEnabled, formEndpoint, withBase } from '../data/site';
 interface Props {
   context?: 'appointment' | 'contact' | 'study';
   study?: string;
@@ -63,7 +63,7 @@ const { context = 'contact', study = '' } = Astro.props;
       <div class="field field-full consent-field">
         <label>
           <input name="consent" type="checkbox" required />
-          <span>He leído el <a href="/aviso-de-privacidad/" target="_blank">aviso de privacidad</a> y autorizo el uso de mis datos para responder esta solicitud. <span aria-hidden="true">*</span></span>
+          <span>He leído el <a href={withBase('/aviso-de-privacidad/')} target="_blank">aviso de privacidad</a> y autorizo el uso de mis datos para responder esta solicitud. <span aria-hidden="true">*</span></span>
         </label>
         <span class="field-error" id={`consent-error-${context}`}></span>
       </div>

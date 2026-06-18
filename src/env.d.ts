@@ -3,6 +3,7 @@
 interface ImportMetaEnv {
   readonly SITE_MODE?: 'preview' | 'production';
   readonly PUBLIC_SITE_URL?: string;
+  readonly PUBLIC_BASE_PATH?: string;
   readonly PUBLIC_FORM_ENDPOINT?: string;
   readonly PUBLIC_ANALYTICS_PROVIDER?: 'none' | 'gtag' | 'dataLayer';
   readonly PUBLIC_GA_ID?: string;

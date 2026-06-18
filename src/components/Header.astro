@@ -1,13 +1,16 @@
 ---
 import Icon from './Icon.astro';
 import Logo from './Logo.astro';
-import { clinicConfig, navigation } from '../data/site';
+import { clinicConfig, navigation, withBase } from '../data/site';
 
 interface Props {
   currentPath: string;
 }
 const { currentPath } = Astro.props;
-const isActive = (href: string) => href === '/' ? currentPath === '/' : currentPath.startsWith(href);
+const isActive = (href: string) => {
+  const resolved = withBase(href);
+  return href === '/' ? currentPath === resolved : currentPath.startsWith(resolved);
+};
 ---
 
 <header class="site-header">
@@ -40,10 +43,10 @@ const isActive = (href: string) => href === '/' ? currentPath === '/' : currentP
     <nav id="site-nav" class="site-nav" aria-label="Navegación principal">
       <ul>
         {navigation.map((item) => (
-          <li><a href={item.href} aria-current={isActive(item.href) ? 'page' : undefined}>{item.label}</a></li>
+          <li><a href={withBase(item.href)} aria-current={isActive(item.href) ? 'page' : undefined}>{item.label}</a></li>
         ))}
       </ul>
-      <a class="button button-primary nav-cta" href="/agendar/" data-track="request_appointment" data-location="header">
+      <a class="button button-primary nav-cta" href={withBase('/agendar/')} data-track="request_appointment" data-location="header">
         Solicitar atención
       </a>
     </nav>

@@ -45,6 +45,17 @@ export const clinicConfig = {
 export const formEndpoint = import.meta.env.PUBLIC_FORM_ENDPOINT?.trim() ?? '';
 export const formEnabled = formEndpoint.startsWith('https://');
 
+const basePath = import.meta.env.BASE_URL === '/'
+  ? ''
+  : `/${import.meta.env.BASE_URL.replace(/^\/|\/$/g, '')}`;
+
+export function withBase(href: string): string {
+  if (!href || href.startsWith('#') || /^(?:[a-z]+:|\/\/)/i.test(href)) return href;
+  if (basePath && (href === basePath || href.startsWith(`${basePath}/`))) return href;
+  const normalized = href.startsWith('/') ? href : `/${href}`;
+  return `${basePath}${normalized}`;
+}
+
 export const navigation = [
   { label: 'Inicio', href: '/' },
   { label: 'Padecimientos', href: '/padecimientos/' },
