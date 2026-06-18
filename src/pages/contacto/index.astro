@@ -1,0 +1,45 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Hero from '../../components/Hero.astro';
+import ContactForm from '../../components/ContactForm.astro';
+import Icon from '../../components/Icon.astro';
+import { clinicConfig } from '../../data/site';
+---
+
+<BaseLayout
+  title="Contacto"
+  description="Contacta a UNNE Puebla para solicitar orientación sobre una consulta o estudio. Los canales oficiales se publican sólo después de su confirmación."
+  pageType="contact"
+>
+  <Hero
+    eyebrow="Hablemos"
+    title="Encuentra el siguiente paso"
+    text="Indica si necesitas una valoración, información sobre un estudio o una orientación general. No compartas información clínica sensible en este formulario."
+    compact
+    art="care"
+  />
+
+  <section class="section">
+    <div class="container contact-layout">
+      <div class="contact-options">
+        <div class="contact-option">
+          <Icon name="phone" />
+          <div><strong>Teléfono</strong><span>{clinicConfig.phonePrimary.publish ? clinicConfig.phonePrimary.value : 'Pendiente de confirmación'}</span></div>
+        </div>
+        <div class="contact-option">
+          <Icon name="mail" />
+          <div><strong>Correo</strong><span>{clinicConfig.email.publish ? clinicConfig.email.value : 'Pendiente de confirmación'}</span></div>
+        </div>
+        <div class="contact-option">
+          <Icon name="clock" />
+          <div><strong>Horarios</strong><span>{clinicConfig.weekdayHours.publish ? clinicConfig.weekdayHours.value : 'Pendientes de confirmación'}</span></div>
+        </div>
+        <div class="contact-option">
+          <Icon name="location" />
+          <div><strong>Ubicación</strong><span>{clinicConfig.address.publish ? clinicConfig.address.value : 'Dirección y mapa pendientes de validación'}</span></div>
+        </div>
+      </div>
+      <ContactForm context="contact" />
+    </div>
+  </section>
+</BaseLayout>

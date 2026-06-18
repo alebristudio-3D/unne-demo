@@ -1,0 +1,18 @@
+---
+import Icon from './Icon.astro';
+interface Props {
+  slug: string;
+  title: string;
+  summary: string;
+  order?: number;
+}
+const { slug, title, summary, order = 1 } = Astro.props;
+const icon = order === 2 ? 'moon' : order === 3 ? 'muscle' : 'brain';
+---
+
+<article class="card condition-card">
+  <div class="card-icon"><Icon name={icon} /></div>
+  <h3><a href={`/padecimientos/${slug}/`}>{title}</a></h3>
+  <p>{summary}</p>
+  <a class="text-link" href={`/padecimientos/${slug}/`}>Conocer más <Icon name="arrow" size={17} /></a>
+</article>

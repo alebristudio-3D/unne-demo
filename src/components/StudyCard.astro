@@ -1,0 +1,32 @@
+---
+import Icon from './Icon.astro';
+interface Props {
+  slug: string;
+  title: string;
+  summary: string;
+  category: string;
+  duration?: string;
+}
+const { slug, title, summary, category, duration } = Astro.props;
+const labels: Record<string, string> = {
+  cerebro: 'Cerebro',
+  'nervios-musculos': 'Nervios y músculos',
+  sueno: 'Sueño',
+  audicion: 'Audición',
+  cirugia: 'Cirugía',
+  cognicion: 'Cognición'
+};
+---
+
+<article class="card study-card" data-filter-item data-category={category} data-search={title.toLowerCase()}>
+  <div class="card-topline">
+    <span class="tag">{labels[category] ?? category}</span>
+    <Icon name="document" size={22} />
+  </div>
+  <h3><a href={`/estudios/${slug}/`}>{title}</a></h3>
+  <p>{summary}</p>
+  {duration && <p class="meta"><Icon name="clock" size={16} /> {duration}</p>}
+  <a class="text-link" href={`/estudios/${slug}/`} data-track="view_study" data-name={title}>
+    Ver estudio <Icon name="arrow" size={17} />
+  </a>
+</article>

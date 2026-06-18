@@ -1,0 +1,41 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Hero from '../../../components/Hero.astro';
+import Icon from '../../../components/Icon.astro';
+
+const events = (await getCollection('resources'))
+  .filter((item) => item.data.type === 'event')
+  .sort((a, b) => (b.data.year ?? 0) - (a.data.year ?? 0));
+---
+
+<BaseLayout
+  title="Archivo de eventos"
+  description="Archivo histórico de actividades académicas de UNNE. No representa una agenda vigente."
+  pageType="events"
+>
+  <Hero
+    eyebrow="Archivo institucional"
+    title="Eventos y actividad académica"
+    text="Este archivo conserva referencias históricas. Los eventos pasados están separados de cualquier agenda próxima para evitar confusión."
+    compact
+    art="signal"
+  />
+  <section class="section">
+    <div class="container">
+      <div class="medical-notice archive-notice">
+        <Icon name="calendar" />
+        <p>No hay próximos eventos confirmados. Las fechas mostradas pertenecen al archivo histórico.</p>
+      </div>
+      <div class="grid-2 resource-preview-grid">
+        {events.map((event) => (
+          <article class="card">
+            {event.data.year && <span class="tag">{event.data.year}</span>}
+            <h2>{event.data.title}</h2>
+            <p>{event.data.summary}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>

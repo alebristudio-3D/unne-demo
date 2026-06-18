@@ -1,0 +1,76 @@
+---
+import { clinicConfig, formEnabled, formEndpoint } from '../data/site';
+interface Props {
+  context?: 'appointment' | 'contact' | 'study';
+  study?: string;
+}
+const { context = 'contact', study = '' } = Astro.props;
+---
+
+<div class="form-shell">
+  {!formEnabled && (
+    <div class="integration-notice" role="status">
+      <strong>Formulario en preparación.</strong>
+      <span>La integración segura de envío aún no está configurada. Ningún dato será enviado desde esta vista previa.</span>
+    </div>
+  )}
+  <form
+    class="contact-form"
+    data-contact-form
+    data-endpoint={formEndpoint}
+    data-enabled={String(formEnabled)}
+    novalidate
+  >
+    <input type="hidden" name="context" value={context} />
+    <input type="hidden" name="study" value={study} />
+    <input type="hidden" name="privacyNoticeVersion" value={clinicConfig.privacyNoticeVersion} />
+    <div class="honeypot" aria-hidden="true">
+      <label for={`website-${context}`}>Sitio web</label>
+      <input id={`website-${context}`} name="website" type="text" tabindex="-1" autocomplete="off" />
+    </div>
+    <div class="form-grid">
+      <div class="field">
+        <label for={`name-${context}`}>Nombre completo <span aria-hidden="true">*</span></label>
+        <input id={`name-${context}`} name="name" type="text" autocomplete="name" required minlength="2" />
+        <span class="field-error" id={`name-error-${context}`}></span>
+      </div>
+      <div class="field">
+        <label for={`phone-${context}`}>Teléfono <span aria-hidden="true">*</span></label>
+        <input id={`phone-${context}`} name="phone" type="tel" autocomplete="tel" inputmode="tel" required minlength="8" />
+        <span class="field-error" id={`phone-error-${context}`}></span>
+      </div>
+      <div class="field">
+        <label for={`email-${context}`}>Correo <span class="optional">(opcional)</span></label>
+        <input id={`email-${context}`} name="email" type="email" autocomplete="email" />
+        <span class="field-error" id={`email-error-${context}`}></span>
+      </div>
+      <div class="field">
+        <label for={`reason-${context}`}>Motivo <span aria-hidden="true">*</span></label>
+        <select id={`reason-${context}`} name="reason" required>
+          <option value="">Selecciona una opción</option>
+          <option value="consulta">Consulta neurológica</option>
+          <option value="estudio">Información sobre un estudio</option>
+          <option value="resultados">Resultados o seguimiento</option>
+          <option value="general">Información general</option>
+        </select>
+        <span class="field-error" id={`reason-error-${context}`}></span>
+      </div>
+      <div class="field field-full">
+        <label for={`message-${context}`}>Mensaje breve</label>
+        <textarea id={`message-${context}`} name="message" rows="4" maxlength="600" aria-describedby={`message-help-${context}`}></textarea>
+        <span class="field-help" id={`message-help-${context}`}>No incluyas diagnósticos completos, estudios, CURP ni información clínica sensible.</span>
+      </div>
+      <div class="field field-full consent-field">
+        <label>
+          <input name="consent" type="checkbox" required />
+          <span>He leído el <a href="/aviso-de-privacidad/" target="_blank">aviso de privacidad</a> y autorizo el uso de mis datos para responder esta solicitud. <span aria-hidden="true">*</span></span>
+        </label>
+        <span class="field-error" id={`consent-error-${context}`}></span>
+      </div>
+    </div>
+    <button class="button button-primary" type="submit" disabled={!formEnabled}>
+      Enviar solicitud
+    </button>
+    <p class="form-status" data-form-status role="status" aria-live="polite"></p>
+  </form>
+</div>

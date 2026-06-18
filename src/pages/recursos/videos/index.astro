@@ -1,0 +1,39 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Hero from '../../../components/Hero.astro';
+import PendingPanel from '../../../components/PendingPanel.astro';
+
+const videos = (await getCollection('resources')).filter((item) => item.data.type === 'video');
+---
+
+<BaseLayout
+  title="Videos"
+  description="Biblioteca de videos de UNNE pendiente de confirmar canal oficial, derechos y vigencia."
+  noindex
+  pageType="videos"
+>
+  <Hero
+    eyebrow="Biblioteca audiovisual"
+    title="Videos con fuente y contexto verificables"
+    text="El material recuperado requiere confirmar canal oficial, derechos de uso y vigencia antes de integrarse en páginas clínicas."
+    compact
+    art="signal"
+  />
+  <section class="section">
+    <div class="container">
+      <PendingPanel text="No se incrustan videos externos hasta confirmar propiedad, canal oficial y pertinencia clínica." />
+      {videos.length > 0 && (
+        <div class="grid-2 resource-preview-grid">
+          {videos.map((video) => (
+            <article class="card">
+              <span class="tag">{video.data.topic}</span>
+              <h2>{video.data.title}</h2>
+              <p>{video.data.summary}</p>
+            </article>
+          ))}
+        </div>
+      )}
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,12 @@
+---
+import Icon from './Icon.astro';
+interface Props {
+  text?: string;
+}
+const { text = 'Esta información es educativa y no sustituye una valoración médica. Ante una urgencia, busca atención inmediata en los servicios de emergencia.' } = Astro.props;
+---
+
+<aside class="medical-notice">
+  <Icon name="shield" />
+  <p>{text}</p>
+</aside>

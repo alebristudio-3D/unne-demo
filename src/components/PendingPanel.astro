@@ -1,0 +1,16 @@
+---
+import Icon from './Icon.astro';
+interface Props {
+  title?: string;
+  text?: string;
+}
+const {
+  title = 'Contenido pendiente de validación',
+  text = 'Esta sección está preparada, pero no se publicará como información definitiva hasta contar con aprobación de UNNE.'
+} = Astro.props;
+---
+
+<aside class="pending-panel">
+  <Icon name="shield" />
+  <div><strong>{title}</strong><p>{text}</p></div>
+</aside>

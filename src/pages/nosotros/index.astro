@@ -1,0 +1,67 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Hero from '../../components/Hero.astro';
+import Icon from '../../components/Icon.astro';
+import PendingPanel from '../../components/PendingPanel.astro';
+import CtaBand from '../../components/CtaBand.astro';
+---
+
+<BaseLayout
+  title="Nosotros"
+  description="Conoce la propuesta institucional de UNNE: atención especializada en trastornos del sistema nervioso con calidad, eficiencia, honestidad y calidez humana."
+  pageType="about"
+>
+  <Hero
+    eyebrow="UNNE Puebla"
+    title="Especialización médica con sentido humano"
+    text="UNNE se presenta como una institución especializada en el diagnóstico y tratamiento de trastornos del sistema nervioso, con un equipo humano y tecnológico orientado a la calidad."
+    primaryLabel="Conocer estudios"
+    primaryHref="/estudios/"
+    secondaryLabel="Solicitar atención"
+    secondaryHref="/agendar/"
+    compact
+    art="care"
+  />
+
+  <section class="section">
+    <div class="container content-split">
+      <article class="prose">
+        <p class="eyebrow">Propósito</p>
+        <h2>Hacer comprensible la atención neurológica</h2>
+        <p>La nueva experiencia digital organiza la información para que pacientes y familiares puedan identificar servicios, comprender estudios y contactar al equipo sin recorrer un archivo de publicaciones antiguas.</p>
+        <p>La propuesta institucional recuperada pone en el centro la eficiencia, la honestidad, la calidad y la calidez humana. Esos principios guían tanto el lenguaje como el diseño del sitio.</p>
+      </article>
+      <div class="placeholder-frame">
+        <div><Icon name="spark" size={48} /><strong>Fotografías reales pendientes</strong><p>Instalaciones, equipo y personal deben documentarse con material autorizado.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-soft">
+    <div class="container">
+      <header class="section-heading align-center">
+        <p class="eyebrow">Principios recuperados</p>
+        <h2>Cómo quiere sentirse la atención</h2>
+      </header>
+      <div class="grid-4">
+        <div class="feature-card"><div class="card-icon"><Icon name="check" /></div><h3>Calidad</h3><p>Procesos explicados con claridad y rigor.</p></div>
+        <div class="feature-card"><div class="card-icon"><Icon name="clock" /></div><h3>Eficiencia</h3><p>Rutas breves hacia consulta o estudio.</p></div>
+        <div class="feature-card"><div class="card-icon"><Icon name="shield" /></div><h3>Honestidad</h3><p>Sin datos, promesas o credenciales no verificadas.</p></div>
+        <div class="feature-card"><div class="card-icon"><Icon name="heart" /></div><h3>Calidez humana</h3><p>Lenguaje sereno para pacientes y cuidadores.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container content-split">
+      <div>
+        <p class="eyebrow">Historia e identidad</p>
+        <h2>Datos institucionales por completar</h2>
+        <p>El año de fundación, misión, visión, certificaciones institucionales, alianzas y cifras de experiencia no se inventan ni se derivan de directorios externos.</p>
+      </div>
+      <PendingPanel text="UNNE debe entregar y aprobar historia institucional, diferenciadores comprobables, manual de marca y material fotográfico." />
+    </div>
+  </section>
+
+  <CtaBand />
+</BaseLayout>

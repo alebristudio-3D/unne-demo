@@ -1,0 +1,51 @@
+---
+import Icon from './Icon.astro';
+import Logo from './Logo.astro';
+import { clinicConfig, navigation } from '../data/site';
+
+interface Props {
+  currentPath: string;
+}
+const { currentPath } = Astro.props;
+const isActive = (href: string) => href === '/' ? currentPath === '/' : currentPath.startsWith(href);
+---
+
+<header class="site-header">
+  <div class="utility">
+    <div class="container utility-inner">
+      <span>Atención neurológica especializada en Puebla</span>
+      <div class="utility-links">
+        {clinicConfig.phonePrimary.publish && (
+          <a href={`tel:${clinicConfig.phonePrimary.value.replace(/\D/g, '')}`} data-track="click_call">
+            <Icon name="phone" size={16} /> {clinicConfig.phonePrimary.value}
+          </a>
+        )}
+        {clinicConfig.weekdayHours.publish && (
+          <span><Icon name="clock" size={16} /> {clinicConfig.weekdayHours.value}</span>
+        )}
+        {clinicConfig.mapUrl.publish && (
+          <a href={clinicConfig.mapUrl.value} target="_blank" rel="noopener" data-track="click_directions">
+            <Icon name="location" size={16} /> Cómo llegar
+          </a>
+        )}
+      </div>
+    </div>
+  </div>
+  <div class="container nav-shell">
+    <Logo />
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+      <span class="sr-only">Abrir menú</span>
+      <Icon name="menu" />
+    </button>
+    <nav id="site-nav" class="site-nav" aria-label="Navegación principal">
+      <ul>
+        {navigation.map((item) => (
+          <li><a href={item.href} aria-current={isActive(item.href) ? 'page' : undefined}>{item.label}</a></li>
+        ))}
+      </ul>
+      <a class="button button-primary nav-cta" href="/agendar/" data-track="request_appointment" data-location="header">
+        Solicitar atención
+      </a>
+    </nav>
+  </div>
+</header>

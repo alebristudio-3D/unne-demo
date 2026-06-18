@@ -1,0 +1,95 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import Hero from '../../components/Hero.astro';
+import Faq from '../../components/Faq.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import MedicalNotice from '../../components/MedicalNotice.astro';
+import PendingPanel from '../../components/PendingPanel.astro';
+
+export async function getStaticPaths() {
+  const studies = await getCollection('studies');
+  return studies.map((study) => ({
+    params: { slug: study.id },
+    props: { study }
+  }));
+}
+
+const { study } = Astro.props;
+const { Content } = await render(study);
+const isDraft = study.data.status === 'draft';
+const schema = !isDraft ? {
+  '@context': 'https://schema.org',
+  '@type': 'MedicalTest',
+  name: study.data.title,
+  description: study.data.summary
+} : undefined;
+---
+
+<BaseLayout
+  title={study.data.title}
+  description={study.data.seoDescription}
+  noindex={isDraft}
+  pageType="study"
+  schema={schema}
+>
+  <Breadcrumbs items={[
+    { label: 'Inicio', href: '/' },
+    { label: 'Estudios', href: '/estudios/' },
+    { label: study.data.title }
+  ]} />
+  <Hero
+    eyebrow="Estudio neurofisiológico"
+    title={study.data.title}
+    text={study.data.summary}
+    primaryLabel="Solicitar información"
+    primaryHref={`/agendar/?estudio=${study.id}`}
+    secondaryLabel="Ver todos los estudios"
+    secondaryHref="/estudios/"
+    compact
+    art={study.data.category === 'sueno' ? 'sleep' : 'signal'}
+  />
+
+  {isDraft ? (
+    <section class="section"><div class="container narrow"><PendingPanel /></div></section>
+  ) : (
+    <>
+      <section class="section">
+        <div class="container content-split">
+          <article class="prose">
+            <h2>¿Para qué sirve?</h2>
+            <p>{study.data.purpose}</p>
+            <h2>¿Cómo se realiza?</h2>
+            <p>{study.data.procedure}</p>
+            <Content />
+            <MedicalNotice text="La indicación de un estudio y la interpretación de sus resultados corresponden a profesionales de salud. Esta ficha no sustituye las instrucciones de UNNE." />
+          </article>
+          <aside class="content-panel">
+            <p class="eyebrow">Datos prácticos</p>
+            <h2>Antes de agendar</h2>
+            <dl class="detail-list">
+              <div><dt>Duración</dt><dd>{study.data.duration ?? 'Pendiente de confirmación para este protocolo.'}</dd></div>
+              <div><dt>Preparación</dt><dd>Pendiente de validación médica. Solicita instrucciones oficiales.</dd></div>
+              <div><dt>Orden médica</dt><dd>Requisito pendiente de confirmación.</dd></div>
+              <div><dt>Resultados</dt><dd>Tiempo y modalidad de entrega pendientes de confirmación.</dd></div>
+            </dl>
+            <PendingPanel
+              title="Información operativa por validar"
+              text="No publicamos preparación, precios, horarios ni entrega de resultados hasta contar con datos aprobados."
+            />
+          </aside>
+        </div>
+      </section>
+      <Faq items={study.data.faq} title={`Preguntas sobre ${study.data.shortTitle ?? study.data.title}`} />
+      <CtaBand
+        title={`¿Te solicitaron ${study.data.title.toLowerCase()}?`}
+        text="Comparte el nombre del estudio y un medio de contacto. UNNE confirmará preparación, disponibilidad y requisitos."
+        label="Solicitar información"
+        href={`/agendar/?estudio=${study.id}`}
+        secondaryLabel="Guía para pacientes"
+        secondaryHref="/pacientes/guia-para-tu-cita/"
+      />
+    </>
+  )}
+</BaseLayout>

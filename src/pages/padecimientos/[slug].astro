@@ -1,0 +1,139 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import Hero from '../../components/Hero.astro';
+import StudyCard from '../../components/StudyCard.astro';
+import Faq from '../../components/Faq.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import MedicalNotice from '../../components/MedicalNotice.astro';
+import PendingPanel from '../../components/PendingPanel.astro';
+
+export async function getStaticPaths() {
+  const conditions = await getCollection('conditions');
+  return conditions.map((condition) => ({
+    params: { slug: condition.id },
+    props: { condition }
+  }));
+}
+
+const { condition } = Astro.props;
+const { Content } = await render(condition);
+const allStudies = await getCollection('studies');
+const studies = condition.data.relatedStudies
+  .map((slug: string) => allStudies.find((study) => study.id === slug))
+  .filter(Boolean);
+const isDraft = condition.data.status === 'draft';
+const schema = !isDraft ? {
+  '@context': 'https://schema.org',
+  '@type': 'MedicalCondition',
+  name: condition.data.title,
+  description: condition.data.summary
+} : undefined;
+---
+
+<BaseLayout
+  title={condition.data.title}
+  description={condition.data.seoDescription}
+  noindex={isDraft}
+  pageType="condition"
+  schema={schema}
+>
+  <Breadcrumbs items={[
+    { label: 'Inicio', href: '/' },
+    { label: 'Padecimientos', href: '/padecimientos/' },
+    { label: condition.data.title }
+  ]} />
+
+  {isDraft ? (
+    <>
+      <Hero
+        eyebrow="Borrador no publicable"
+        title={condition.data.title}
+        text={condition.data.summary}
+        compact
+        art="brain"
+      />
+      <section class="section">
+        <div class="container narrow">
+          <PendingPanel text="La ruta existe para completar arquitectura y revisión, pero el contenido no se indexa ni debe publicarse hasta que UNNE confirme que atiende este padecimiento." />
+        </div>
+      </section>
+    </>
+  ) : (
+    <>
+      <Hero
+        eyebrow="Información orientativa"
+        title={condition.data.title}
+        text={condition.data.summary}
+        primaryLabel="Solicitar valoración"
+        primaryHref="/agendar/"
+        secondaryLabel="Ver estudios"
+        secondaryHref="/estudios/"
+        compact
+        art={condition.id === 'trastornos-del-sueno' ? 'sleep' : 'brain'}
+      />
+
+      <section class="section">
+        <div class="container content-split">
+          <article class="prose">
+            <Content />
+            <MedicalNotice />
+          </article>
+          <aside class="content-panel">
+            <p class="eyebrow">Síntomas frecuentes</p>
+            <h2>Señales que conviene comentar</h2>
+            <ul class="check-list">
+              {condition.data.symptoms.map((symptom: string) => <li>{symptom}</li>)}
+            </ul>
+          </aside>
+        </div>
+      </section>
+
+      <section class="section section-soft">
+        <div class="container">
+          <div class="content-split">
+            <div>
+              <p class="eyebrow">Valoración profesional</p>
+              <h2>Cuándo solicitar una cita</h2>
+              <ul class="check-list">
+                {condition.data.evaluation.map((item: string) => <li>{item}</li>)}
+              </ul>
+            </div>
+            <div class="content-panel">
+              <p class="eyebrow">Cómo se evalúa</p>
+              <h2>La historia clínica guía el proceso</h2>
+              <p>La valoración comienza con una conversación detallada y una exploración. El especialista decide si se requieren estudios complementarios y cuáles son apropiados.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {studies.length > 0 && (
+        <section class="section">
+          <div class="container">
+            <header class="section-heading">
+              <p class="eyebrow">Evaluación complementaria</p>
+              <h2>Estudios relacionados</h2>
+              <p>La relación es informativa. Sólo un profesional puede indicar el estudio adecuado.</p>
+            </header>
+            <div class="grid-3">
+              {studies.map((study: any) => (
+                <StudyCard
+                  slug={study.id}
+                  title={study.data.shortTitle ?? study.data.title}
+                  summary={study.data.summary}
+                  category={study.data.category}
+                  duration={study.data.duration}
+                />
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      <Faq items={condition.data.faq} />
+      <CtaBand title={`¿Buscas atención para ${condition.data.title.toLowerCase()}?`} text="Solicita una valoración. El equipo confirmará el proceso y la disponibilidad por un canal oficial." />
+    </>
+  )}
+</BaseLayout>

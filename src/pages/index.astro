@@ -1,0 +1,242 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import Icon from '../components/Icon.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import ConditionCard from '../components/ConditionCard.astro';
+import StudyCard from '../components/StudyCard.astro';
+import Faq from '../components/Faq.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { clinicConfig } from '../data/site';
+
+const conditions = (await getCollection('conditions'))
+  .filter((item) => item.data.status === 'published')
+  .sort((a, b) => a.data.order - b.data.order);
+const studies = (await getCollection('studies'))
+  .filter((item) => item.data.status === 'published')
+  .sort((a, b) => a.data.order - b.data.order)
+  .slice(0, 6);
+
+const faqs = [
+  {
+    question: '¿Necesito una consulta o puedo agendar directamente un estudio?',
+    answer: 'Si ya cuentas con una orden médica, puedes solicitar información del estudio indicado. Si aún no tienes una indicación o necesitas orientación clínica, conviene solicitar una valoración.'
+  },
+  {
+    question: '¿Atienden a pacientes pediátricos?',
+    answer: 'Las edades atendidas y los servicios pediátricos están pendientes de confirmación. No se muestran como servicio vigente hasta contar con esa validación.'
+  },
+  {
+    question: '¿Cómo recibiré la preparación para mi estudio?',
+    answer: 'La preparación depende del estudio y del protocolo solicitado. UNNE debe proporcionar las indicaciones oficiales al confirmar la cita.'
+  },
+  {
+    question: '¿Este sitio puede decirme qué padecimiento tengo?',
+    answer: 'No. La información ayuda a orientarte, pero un diagnóstico requiere historia clínica, exploración y, cuando corresponde, estudios indicados por un profesional.'
+  }
+];
+---
+
+<BaseLayout
+  title="Inicio"
+  description="UNNE es una unidad especializada en neurología, neurofisiología y medicina del sueño en Puebla. Conoce padecimientos, estudios y opciones de atención."
+  pageType="home"
+>
+  <Hero
+    eyebrow="Neurología · Neurofisiología · Sueño"
+    title="Claridad para tu diagnóstico. Atención para tu bienestar."
+    text="Consulta con especialistas y conoce estudios neurológicos, neurofisiológicos y del sueño en un espacio orientado a la precisión clínica y al acompañamiento humano."
+    primaryLabel="Solicitar atención"
+    primaryHref="/agendar/"
+    secondaryLabel="Consultar estudios"
+    secondaryHref="/estudios/"
+    art="care"
+  />
+
+  <section class="container" aria-label="Accesos rápidos">
+    <div class="need-grid">
+      <a class="need-card" href="/agendar/">
+        <Icon name="heart" />
+        <strong>Necesito una consulta</strong>
+        <span>Solicita orientación para una valoración neurológica.</span>
+      </a>
+      <a class="need-card" href="/estudios/">
+        <Icon name="document" />
+        <strong>Me indicaron un estudio</strong>
+        <span>Encuentra información general y requisitos por confirmar.</span>
+      </a>
+      <a class="need-card" href="/padecimientos/trastornos-del-sueno/">
+        <Icon name="moon" />
+        <strong>Quiero dormir mejor</strong>
+        <span>Conoce alteraciones del sueño y su evaluación.</span>
+      </a>
+      <a class="need-card" href="/especialistas/">
+        <Icon name="brain" />
+        <strong>Busco un especialista</strong>
+        <span>Consulta la estructura de los perfiles médicos.</span>
+      </a>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <SectionHeading
+        eyebrow="Áreas de atención"
+        title="Un punto de partida claro"
+        text="Explora información orientativa sobre padecimientos publicados en el sitio actual y los estudios relacionados."
+      />
+      <div class="grid-3">
+        {conditions.map((condition) => (
+          <ConditionCard
+            slug={condition.id}
+            title={condition.data.title}
+            summary={condition.data.summary}
+            order={condition.data.order}
+          />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-soft">
+    <div class="container">
+      <SectionHeading
+        eyebrow="Neurodiagnóstico"
+        title="Estudios especializados"
+        text="Cada ficha explica para qué sirve el estudio y cómo se realiza, sin sustituir las indicaciones específicas que debe proporcionar el equipo de UNNE."
+      />
+      <div class="grid-3">
+        {studies.map((study) => (
+          <StudyCard
+            slug={study.id}
+            title={study.data.shortTitle ?? study.data.title}
+            summary={study.data.summary}
+            category={study.data.category}
+            duration={study.data.duration}
+          />
+        ))}
+      </div>
+      <div class="section-action">
+        <a class="button button-secondary" href="/estudios/">Ver todos los estudios <Icon name="arrow" size={18} /></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container content-split">
+      <div>
+        <SectionHeading
+          eyebrow="Por qué UNNE"
+          title="Ciencia precisa, atención humana"
+          text="El rediseño organiza la experiencia alrededor de las preguntas reales de pacientes, familiares y médicos que refieren."
+        />
+        <div class="grid-2">
+          <div class="feature-card">
+            <div class="card-icon"><Icon name="brain" /></div>
+            <h3>Atención especializada</h3>
+            <p>Neurología, neurofisiología y estudio del sueño reunidos en una experiencia clara.</p>
+          </div>
+          <div class="feature-card">
+            <div class="card-icon"><Icon name="spark" /></div>
+            <h3>Tecnología con propósito</h3>
+            <p>Estudios descritos en lenguaje comprensible y relacionados con la orientación clínica.</p>
+          </div>
+          <div class="feature-card">
+            <div class="card-icon"><Icon name="heart" /></div>
+            <h3>Trato comprensible</h3>
+            <p>Información serena y no alarmista para acompañar decisiones de salud.</p>
+          </div>
+          <div class="feature-card">
+            <div class="card-icon"><Icon name="shield" /></div>
+            <h3>Información responsable</h3>
+            <p>Los datos no confirmados permanecen ocultos hasta su aprobación.</p>
+          </div>
+        </div>
+      </div>
+      <div class="placeholder-frame">
+        <div>
+          <Icon name="brain" size={54} />
+          <strong>Fotografía institucional pendiente</strong>
+          <p>Espacio preparado para una imagen real del equipo o las instalaciones de UNNE.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-soft">
+    <div class="container">
+      <SectionHeading
+        eyebrow="Cómo funciona"
+        title="Tres pasos para solicitar atención"
+        align="center"
+      />
+      <div class="grid-3 process-grid">
+        <article class="process-step">
+          <h3>Identifica tu necesidad</h3>
+          <p>Elige entre valoración, información sobre un estudio o una consulta general.</p>
+        </article>
+        <article class="process-step">
+          <h3>Comparte datos mínimos</h3>
+          <p>Nombre, teléfono y motivo son suficientes. No pedimos historial clínico en el formulario.</p>
+        </article>
+        <article class="process-step">
+          <h3>Recibe orientación</h3>
+          <p>El equipo confirmará disponibilidad, requisitos y siguientes pasos por un canal aprobado.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container content-split">
+      <div>
+        <SectionHeading
+          eyebrow="Equipo médico"
+          title="Conoce a quienes te acompañan"
+          text="Los perfiles individuales están preparados, pero no se publicarán como definitivos hasta verificar pertenencia, credenciales y disponibilidad."
+        />
+        <a class="button button-secondary" href="/especialistas/">Ver especialistas</a>
+      </div>
+      <div class="content-panel">
+        <p class="eyebrow">Perfiles responsables</p>
+        <h2>Credenciales verificadas antes de publicar</h2>
+        <p>La versión pública sólo mostrará cédulas, certificaciones y formación que hayan sido aprobadas directamente por cada profesional.</p>
+      </div>
+    </div>
+  </section>
+
+  <Faq items={faqs} />
+
+  <section class="section section-soft">
+    <div class="container contact-layout">
+      <div>
+        <SectionHeading
+          eyebrow="Contacto"
+          title="UNNE Puebla"
+          text="Los canales, horarios y dirección se activarán desde una sola configuración cuando el cliente confirme la información vigente."
+        />
+        {clinicConfig.address.publish ? (
+          <address>{clinicConfig.address.value}</address>
+        ) : (
+          <div class="pending-panel">
+            <Icon name="location" />
+            <div>
+              <strong>Ubicación por confirmar</strong>
+              <p>La dirección recuperada no se publica hasta estandarizarla y validar el enlace de mapa.</p>
+            </div>
+          </div>
+        )}
+      </div>
+      <div class="placeholder-frame">
+        <div>
+          <Icon name="location" size={48} />
+          <strong>Mapa pendiente</strong>
+          <p>Se integrará cuando exista una URL oficial confirmada.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <CtaBand secondaryLabel="Ver guía para pacientes" secondaryHref="/pacientes/guia-para-tu-cita/" />
+</BaseLayout>

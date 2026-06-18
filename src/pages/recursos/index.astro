@@ -1,0 +1,62 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Hero from '../../components/Hero.astro';
+import Icon from '../../components/Icon.astro';
+import CtaBand from '../../components/CtaBand.astro';
+---
+
+<BaseLayout
+  title="Recursos"
+  description="Centro de recursos de UNNE con contenidos médicos, videos y archivo académico sujetos a revisión profesional."
+  pageType="resources"
+>
+  <Hero
+    eyebrow="Aprender con fuentes responsables"
+    title="Información que acompaña, no que diagnostica"
+    text="El centro de recursos organiza artículos, videos y eventos. El material histórico permanece claramente identificado hasta completar revisión médica y editorial."
+    compact
+    art="brain"
+  />
+
+  <section class="section">
+    <div class="container grid-3">
+      <article class="card">
+        <div class="card-icon"><Icon name="document" /></div>
+        <h2><a href="/recursos/blog/">Artículos</a></h2>
+        <p>Contenido educativo con autor, revisor, fuentes y fecha de actualización antes de publicarse.</p>
+        <a class="text-link" href="/recursos/blog/">Explorar artículos <Icon name="arrow" size={17} /></a>
+      </article>
+      <article class="card">
+        <div class="card-icon"><Icon name="brain" /></div>
+        <h2><a href="/recursos/videos/">Videos</a></h2>
+        <p>Material audiovisual organizado por tema y vinculado a la fuente oficial.</p>
+        <a class="text-link" href="/recursos/videos/">Explorar videos <Icon name="arrow" size={17} /></a>
+      </article>
+      <article class="card">
+        <div class="card-icon"><Icon name="calendar" /></div>
+        <h2><a href="/recursos/eventos/">Eventos</a></h2>
+        <p>Archivo histórico separado de cualquier agenda vigente.</p>
+        <a class="text-link" href="/recursos/eventos/">Ver archivo <Icon name="arrow" size={17} /></a>
+      </article>
+    </div>
+  </section>
+
+  <section class="section section-soft">
+    <div class="container content-split">
+      <div>
+        <p class="eyebrow">Flujo editorial</p>
+        <h2>Cada contenido necesita contexto clínico</h2>
+        <p>Las notas del sitio anterior datan principalmente de 2020. No se presentan como vigentes sin revisar redacción, fuentes, autoría y utilidad para pacientes.</p>
+      </div>
+      <div class="content-panel">
+        <ol class="check-list">
+          <li>Revisión médica profesional.</li>
+          <li>Fuentes clínicas y fecha de actualización.</li>
+          <li>Lenguaje comprensible y no alarmista.</li>
+          <li>Aviso educativo y enlaces hacia atención.</li>
+        </ol>
+      </div>
+    </div>
+  </section>
+  <CtaBand />
+</BaseLayout>

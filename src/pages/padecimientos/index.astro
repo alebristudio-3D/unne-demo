@@ -1,0 +1,78 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Hero from '../../components/Hero.astro';
+import ConditionCard from '../../components/ConditionCard.astro';
+import MedicalNotice from '../../components/MedicalNotice.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import Icon from '../../components/Icon.astro';
+
+const conditions = (await getCollection('conditions'))
+  .filter((item) => item.data.status === 'published')
+  .sort((a, b) => a.data.order - b.data.order);
+---
+
+<BaseLayout
+  title="Padecimientos neurológicos"
+  description="Información orientativa sobre epilepsia, trastornos del sueño y trastornos del movimiento. Conoce cuándo solicitar una valoración."
+  pageType="condition-index"
+>
+  <Hero
+    eyebrow="Orientación para pacientes"
+    title="Entender lo que ocurre es un primer paso"
+    text="Explora información clara sobre padecimientos neurológicos atendidos en el sitio actual de UNNE y conoce qué estudios pueden formar parte de una evaluación."
+    primaryLabel="Solicitar valoración"
+    primaryHref="/agendar/"
+    secondaryLabel="Ver estudios"
+    secondaryHref="/estudios/"
+    compact
+    art="brain"
+  />
+
+  <section class="section">
+    <div class="container">
+      <div class="filter-toolbar">
+        <label class="search-field">
+          <span class="sr-only">Buscar padecimiento</span>
+          <Icon name="search" size={20} />
+          <input type="search" placeholder="Buscar por nombre o síntoma" data-filter-search />
+        </label>
+      </div>
+      <div class="grid-3" data-condition-list>
+        {conditions.map((condition) => (
+          <div data-filter-item data-category="all" data-search={`${condition.data.title} ${condition.data.symptoms.join(' ')}`.toLowerCase()}>
+            <ConditionCard
+              slug={condition.id}
+              title={condition.data.title}
+              summary={condition.data.summary}
+              order={condition.data.order}
+            />
+          </div>
+        ))}
+      </div>
+      <div class="filter-empty" data-filter-empty>No encontramos coincidencias. Prueba con otro término.</div>
+    </div>
+  </section>
+
+  <section class="section section-soft">
+    <div class="container content-split">
+      <div>
+        <p class="eyebrow">Cuándo pedir ayuda</p>
+        <h2>Una cita programada puede ser útil cuando…</h2>
+        <ul class="check-list">
+          <li>Un síntoma neurológico persiste, reaparece o interfiere con tus actividades.</li>
+          <li>Necesitas revisar un diagnóstico, tratamiento o estudio previamente indicado.</li>
+          <li>Tu médico solicita una valoración neurológica o neurofisiológica.</li>
+        </ul>
+      </div>
+      <div class="content-panel">
+        <p class="eyebrow">Situaciones urgentes</p>
+        <h2>No esperes una respuesta web</h2>
+        <p>Ante pérdida súbita de fuerza, dificultad repentina para hablar, pérdida de conciencia, una crisis prolongada o cualquier situación que parezca una emergencia, contacta a los servicios de urgencias.</p>
+      </div>
+    </div>
+    <div class="container"><MedicalNotice /></div>
+  </section>
+
+  <CtaBand title="¿No sabes por dónde empezar?" text="Solicita una valoración profesional. La información del sitio orienta, pero no diagnostica." />
+</BaseLayout>

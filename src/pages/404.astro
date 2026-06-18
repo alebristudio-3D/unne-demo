@@ -1,0 +1,25 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Icon from '../components/Icon.astro';
+---
+
+<BaseLayout
+  title="Página no encontrada"
+  description="La página que buscas no existe o fue trasladada."
+  noindex
+  pageType="error"
+>
+  <section class="section error-page">
+    <div class="container narrow">
+      <div class="card-icon"><Icon name="search" size={30} /></div>
+      <p class="eyebrow">Error 404</p>
+      <h1>Esta página no está disponible</h1>
+      <p class="hero-text">Puede haber cambiado de dirección o haber sido retirada. Usa uno de estos accesos para continuar.</p>
+      <div class="button-row">
+        <a class="button button-primary" href="/">Ir al inicio</a>
+        <a class="button button-secondary" href="/estudios/">Ver estudios</a>
+        <a class="button button-secondary" href="/contacto/">Contacto</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

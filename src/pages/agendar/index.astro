@@ -1,0 +1,43 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Hero from '../../components/Hero.astro';
+import ContactForm from '../../components/ContactForm.astro';
+import Icon from '../../components/Icon.astro';
+
+const study = Astro.url.searchParams.get('estudio') ?? '';
+---
+
+<BaseLayout
+  title="Solicitar atención"
+  description="Solicita una cita o información sobre un estudio en UNNE Puebla mediante un formulario que recoge únicamente datos mínimos."
+  noindex
+  pageType="appointment"
+>
+  <Hero
+    eyebrow="Solicitud de atención"
+    title="Cuéntanos qué necesitas"
+    text="Comparte sólo los datos necesarios para que el equipo pueda responder. La solicitud no confirma una cita hasta recibir contacto por un canal oficial."
+    compact
+    art="care"
+  />
+
+  <section class="section">
+    <div class="container contact-layout">
+      <div>
+        <p class="eyebrow">Antes de enviar</p>
+        <h2>Protegemos la información desde el diseño</h2>
+        <ul class="check-list">
+          <li>No solicitamos diagnóstico completo ni expediente.</li>
+          <li>El correo es opcional; el teléfono permite responder la solicitud.</li>
+          <li>La casilla de privacidad nunca está premarcada.</li>
+          <li>La cita queda pendiente hasta que UNNE la confirme.</li>
+        </ul>
+        <div class="medical-notice">
+          <Icon name="shield" />
+          <p>Este canal no atiende urgencias. Ante una emergencia, contacta a los servicios de urgencias.</p>
+        </div>
+      </div>
+      <ContactForm context={study ? 'study' : 'appointment'} study={study} />
+    </div>
+  </section>
+</BaseLayout>

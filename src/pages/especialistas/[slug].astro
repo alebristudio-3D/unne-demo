@@ -1,0 +1,58 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import Hero from '../../components/Hero.astro';
+import PendingPanel from '../../components/PendingPanel.astro';
+import CtaBand from '../../components/CtaBand.astro';
+
+export async function getStaticPaths() {
+  const doctors = await getCollection('doctors');
+  return doctors.map((doctor) => ({
+    params: { slug: doctor.id },
+    props: { doctor }
+  }));
+}
+
+const { doctor } = Astro.props;
+const { Content } = await render(doctor);
+const isDraft = doctor.data.status === 'draft';
+---
+
+<BaseLayout
+  title={doctor.data.name}
+  description={doctor.data.seoDescription}
+  noindex={isDraft}
+  pageType="doctor"
+>
+  <Breadcrumbs items={[
+    { label: 'Inicio', href: '/' },
+    { label: 'Especialistas', href: '/especialistas/' },
+    { label: doctor.data.name }
+  ]} />
+  <Hero
+    eyebrow={isDraft ? 'Perfil en revisión' : 'Especialista UNNE'}
+    title={doctor.data.name}
+    text={doctor.data.summary}
+    compact
+    art="care"
+  />
+  <section class="section">
+    <div class="container content-split">
+      <article class="prose">
+        <Content />
+        {doctor.data.areas.length > 0 && (
+          <>
+            <h2>Áreas recuperadas del perfil anterior</h2>
+            <ul>{doctor.data.areas.map((area: string) => <li>{area}</li>)}</ul>
+          </>
+        )}
+      </article>
+      <PendingPanel
+        title="Perfil no publicable todavía"
+        text="Falta validar participación actual, cédulas, certificaciones, formación, asociaciones, fotografía, sedes, edades atendidas y disponibilidad."
+      />
+    </div>
+  </section>
+  <CtaBand title="¿Buscas atención especializada?" text="La asignación de profesional y su disponibilidad se confirmarán al solicitar una valoración." />
+</BaseLayout>

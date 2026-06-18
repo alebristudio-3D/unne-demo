@@ -1,0 +1,38 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Hero from '../../../components/Hero.astro';
+import PendingPanel from '../../../components/PendingPanel.astro';
+
+const articles = (await getCollection('resources')).filter((item) => item.data.type === 'article');
+---
+
+<BaseLayout
+  title="Artículos"
+  description="Artículos médicos de UNNE en proceso de actualización, revisión profesional y documentación de fuentes."
+  noindex
+  pageType="blog"
+>
+  <Hero
+    eyebrow="Biblioteca médica"
+    title="Artículos en revisión editorial"
+    text="La arquitectura está lista para contenidos sobre epilepsia, sueño, movimiento, memoria, estudios y cuidado. Los textos históricos no se publican como vigentes sin revisión."
+    compact
+    art="brain"
+  />
+  <section class="section">
+    <div class="container">
+      <PendingPanel text="Esta sección permanecerá fuera del índice público hasta que cada artículo tenga autor o revisor médico, fuentes y fecha de actualización." />
+      <div class="grid-2 resource-preview-grid">
+        {articles.map((article) => (
+          <article class="card">
+            <span class="tag">{article.data.topic}</span>
+            <h2>{article.data.title}</h2>
+            <p>{article.data.summary}</p>
+            <small>Estado: revisión requerida</small>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>

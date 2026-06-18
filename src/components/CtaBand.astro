@@ -1,0 +1,35 @@
+---
+import Icon from './Icon.astro';
+interface Props {
+  title?: string;
+  text?: string;
+  label?: string;
+  href?: string;
+  secondaryLabel?: string;
+  secondaryHref?: string;
+}
+const {
+  title = '¿Necesitas una valoración o un estudio?',
+  text = 'Cuéntanos qué necesitas. El equipo de UNNE podrá orientarte hacia el siguiente paso una vez que los canales oficiales sean confirmados.',
+  label = 'Solicitar atención',
+  href = '/agendar/',
+  secondaryLabel,
+  secondaryHref
+} = Astro.props;
+---
+
+<section class="section cta-section">
+  <div class="container cta-band">
+    <div>
+      <p class="eyebrow">Tu siguiente paso</p>
+      <h2>{title}</h2>
+      <p>{text}</p>
+    </div>
+    <div class="button-row">
+      <a class="button button-light" href={href} data-track="request_appointment" data-location="cta-band">
+        {label}<Icon name="arrow" size={18} />
+      </a>
+      {secondaryLabel && secondaryHref && <a class="button button-ghost" href={secondaryHref}>{secondaryLabel}</a>}
+    </div>
+  </div>
+</section>

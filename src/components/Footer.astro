@@ -1,0 +1,64 @@
+---
+import Icon from './Icon.astro';
+import Logo from './Logo.astro';
+import { clinicConfig } from '../data/site';
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div class="footer-brand">
+      <Logo />
+      <p>Información clara para orientar tu siguiente paso en neurología, neurofisiología y medicina del sueño.</p>
+    </div>
+    <div>
+      <h2>Atención</h2>
+      <ul>
+        <li><a href="/padecimientos/">Padecimientos</a></li>
+        <li><a href="/estudios/">Estudios</a></li>
+        <li><a href="/especialistas/">Especialistas</a></li>
+        <li><a href="/pacientes/guia-para-tu-cita/">Guía para tu cita</a></li>
+      </ul>
+    </div>
+    <div>
+      <h2>UNNE</h2>
+      <ul>
+        <li><a href="/nosotros/">Nosotros</a></li>
+        <li><a href="/recursos/">Recursos</a></li>
+        <li><a href="/contacto/">Contacto</a></li>
+        <li><a href="/aviso-de-privacidad/">Aviso de privacidad</a></li>
+      </ul>
+    </div>
+    <div>
+      <h2>Contacto</h2>
+      <ul class="contact-list">
+        {clinicConfig.phonePrimary.publish && <li><Icon name="phone" size={18} /><a href={`tel:${clinicConfig.phonePrimary.value.replace(/\D/g, '')}`}>{clinicConfig.phonePrimary.value}</a></li>}
+        {clinicConfig.email.publish && <li><Icon name="mail" size={18} /><a href={`mailto:${clinicConfig.email.value}`}>{clinicConfig.email.value}</a></li>}
+        {clinicConfig.address.publish && <li><Icon name="location" size={18} /><span>{clinicConfig.address.value}</span></li>}
+        {!clinicConfig.phonePrimary.publish && !clinicConfig.email.publish && (
+          <li><span class="pending-note">Canales de contacto pendientes de confirmación.</span></li>
+        )}
+      </ul>
+    </div>
+  </div>
+  <div class="container footer-bottom">
+    <p>© {year} UNNE. Información educativa; no sustituye una consulta médica.</p>
+    <div>
+      <a href="/terminos-de-uso/">Términos</a>
+      <a href={clinicConfig.social.instagram} target="_blank" rel="noopener">Instagram</a>
+    </div>
+  </div>
+</footer>
+
+{clinicConfig.whatsapp.publish && (
+  <a
+    class="whatsapp-fab"
+    href={`https://wa.me/${clinicConfig.whatsapp.value.replace(/\D/g, '')}`}
+    target="_blank"
+    rel="noopener"
+    aria-label="Contactar a UNNE por WhatsApp"
+    data-track="click_whatsapp"
+  >
+    <Icon name="whatsapp" />
+  </a>
+)}

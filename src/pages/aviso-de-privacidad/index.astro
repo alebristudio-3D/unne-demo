@@ -1,0 +1,51 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PendingPanel from '../../components/PendingPanel.astro';
+import { clinicConfig } from '../../data/site';
+---
+
+<BaseLayout
+  title="Aviso de privacidad"
+  description="Estructura editable del aviso de privacidad de UNNE, pendiente de revisión y aprobación legal antes de publicación."
+  noindex
+  pageType="legal"
+>
+  <section class="section legal-hero">
+    <div class="container narrow">
+      <p class="eyebrow">Documento legal</p>
+      <h1>Aviso de privacidad</h1>
+      <p class="hero-text">Borrador estructural para revisión del responsable legal de UNNE.</p>
+      <PendingPanel
+        title="Revisión legal obligatoria"
+        text="El aviso de 2021 contiene inconsistencias de dirección, correo y texto duplicado. Esta página no constituye todavía el aviso definitivo."
+      />
+    </div>
+  </section>
+  <section class="section section-soft">
+    <article class="container narrow prose legal-copy">
+      <h2>1. Responsable</h2>
+      <p>La identidad legal, domicilio y canal para derechos ARCO deben confirmarse. La razón social recuperada del aviso anterior es <strong>{clinicConfig.legalEntity.value}</strong>, pero permanece pendiente de validación.</p>
+
+      <h2>2. Datos tratados</h2>
+      <p>El formulario público está diseñado para solicitar nombre, teléfono, correo opcional, motivo de contacto y mensaje breve. No debe utilizarse para enviar expedientes o datos clínicos detallados.</p>
+
+      <h2>3. Finalidades</h2>
+      <p>Responder solicitudes de contacto, orientar sobre consultas o estudios y gestionar una posible cita. Las finalidades administrativas, clínicas, estadísticas y de marketing requieren redacción y base legal aprobadas.</p>
+
+      <h2>4. Datos sensibles</h2>
+      <p>UNNE debe definir los canales adecuados para recibir información de salud. El formulario general limita deliberadamente la captura de datos sensibles.</p>
+
+      <h2>5. Derechos ARCO</h2>
+      <p>El procedimiento, correo responsable, plazos y requisitos deben ser revisados por asesoría legal y publicados aquí.</p>
+
+      <h2>6. Transferencias y encargados</h2>
+      <p>Pendiente de identificar proveedores, encargados, transferencias aplicables y medidas de protección.</p>
+
+      <h2>7. Cookies y analítica</h2>
+      <p>La versión inicial no activa herramientas no esenciales sin configuración. Si se incorpora analítica o publicidad, deberá documentarse el proveedor y habilitarse el mecanismo de consentimiento que corresponda.</p>
+
+      <h2>8. Cambios al aviso</h2>
+      <p>La versión aprobada deberá incluir fecha efectiva, medio de comunicación de cambios y datos completos del responsable.</p>
+    </article>
+  </section>
+</BaseLayout>

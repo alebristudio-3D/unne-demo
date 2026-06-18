@@ -1,0 +1,97 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Hero from '../../components/Hero.astro';
+import StudyCard from '../../components/StudyCard.astro';
+import Faq from '../../components/Faq.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import Icon from '../../components/Icon.astro';
+
+const studies = (await getCollection('studies'))
+  .filter((item) => item.data.status === 'published')
+  .sort((a, b) => a.data.order - b.data.order);
+const categories = [
+  ['all', 'Todos'],
+  ['cerebro', 'Cerebro'],
+  ['nervios-musculos', 'Nervios y músculos'],
+  ['sueno', 'Sueño'],
+  ['audicion', 'Audición'],
+  ['cirugia', 'Cirugía'],
+  ['cognicion', 'Cognición']
+];
+const faqs = [
+  { question: '¿Necesito orden médica?', answer: 'El requisito puede variar según el estudio. Debe confirmarse con UNNE antes de programarlo.' },
+  { question: '¿Dónde encuentro la preparación?', answer: 'Cada ficha muestra sólo la información confirmada. Las instrucciones oficiales se proporcionarán al agendar.' },
+  { question: '¿Cuándo se entregan los resultados?', answer: 'Los tiempos de entrega están pendientes de validación para cada estudio y no se publican hasta confirmarlos.' }
+];
+---
+
+<BaseLayout
+  title="Estudios neurológicos"
+  description="Explora estudios de neurología, neurofisiología, sueño, audición y monitoreo realizados por UNNE Puebla."
+  pageType="study-index"
+>
+  <Hero
+    eyebrow="Estudios especializados"
+    title="Información clara antes de tu estudio"
+    text="Conoce el objetivo y el procedimiento general de los estudios publicados por UNNE. La preparación, duración y entrega de resultados se confirman de forma individual."
+    primaryLabel="Solicitar información"
+    primaryHref="/agendar/"
+    secondaryLabel="Guía para pacientes"
+    secondaryHref="/pacientes/guia-para-tu-cita/"
+    compact
+    art="signal"
+  />
+
+  <section class="section" data-filter-root>
+    <div class="container">
+      <div class="filter-toolbar">
+        <label class="search-field">
+          <span class="sr-only">Buscar estudio</span>
+          <Icon name="search" size={20} />
+          <input type="search" placeholder="Buscar por nombre" data-filter-search />
+        </label>
+        <div class="filter-chips" aria-label="Filtrar por categoría">
+          {categories.map(([value, label], index) => (
+            <button class="filter-chip" type="button" data-filter={value} aria-pressed={index === 0}>{label}</button>
+          ))}
+        </div>
+      </div>
+      <div class="grid-3">
+        {studies.map((study) => (
+          <StudyCard
+            slug={study.id}
+            title={study.data.shortTitle ?? study.data.title}
+            summary={study.data.summary}
+            category={study.data.category}
+            duration={study.data.duration}
+          />
+        ))}
+      </div>
+      <div class="filter-empty" data-filter-empty>No encontramos estudios con esos filtros.</div>
+    </div>
+  </section>
+
+  <section class="section section-soft">
+    <div class="container content-split">
+      <div>
+        <p class="eyebrow">¿Ya tienes una orden médica?</p>
+        <h2>Ten a la mano el nombre exacto del estudio</h2>
+        <p>Al solicitar información, comparte únicamente el nombre del estudio y tus datos de contacto. No envíes expedientes ni información clínica sensible desde el formulario general.</p>
+        <a class="button button-primary" href="/agendar/" data-track="request_study_info">Solicitar información</a>
+      </div>
+      <div class="content-panel">
+        <h2>Antes de acudir</h2>
+        <ul class="check-list">
+          <li>Confirma fecha, hora y duración estimada.</li>
+          <li>Solicita la preparación oficial aplicable.</li>
+          <li>Pregunta si necesitas orden, acompañante o estudios previos.</li>
+          <li>Verifica el proceso y tiempo de entrega de resultados.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <Faq items={faqs} />
+  <CtaBand title="¿Necesitas información sobre un estudio?" text="Dinos cuál te solicitaron. No incluyas información médica sensible en el formulario general." label="Consultar estudio" />
+</BaseLayout>

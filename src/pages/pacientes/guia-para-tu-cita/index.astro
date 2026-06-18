@@ -1,0 +1,60 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Hero from '../../../components/Hero.astro';
+import Icon from '../../../components/Icon.astro';
+import CtaBand from '../../../components/CtaBand.astro';
+---
+
+<BaseLayout
+  title="Guía para tu cita"
+  description="Guía general para preparar una consulta neurológica o un estudio en UNNE Puebla sin compartir información clínica sensible por internet."
+  pageType="patient-guide"
+>
+  <Hero
+    eyebrow="Pacientes y familiares"
+    title="Prepárate con tranquilidad"
+    text="Una guía general para aprovechar mejor el contacto y llevar la información útil. Las instrucciones específicas siempre deben ser confirmadas por UNNE."
+    primaryLabel="Solicitar atención"
+    primaryHref="/agendar/"
+    secondaryLabel="Ver estudios"
+    secondaryHref="/estudios/"
+    compact
+    art="care"
+  />
+
+  <section class="section">
+    <div class="container">
+      <header class="section-heading align-center">
+        <p class="eyebrow">Consulta neurológica</p>
+        <h2>Qué puede ayudarte a preparar</h2>
+      </header>
+      <div class="grid-4">
+        <div class="feature-card"><div class="card-icon"><Icon name="document" /></div><h3>Motivo principal</h3><p>Describe cuándo comenzó y cómo afecta tus actividades.</p></div>
+        <div class="feature-card"><div class="card-icon"><Icon name="clock" /></div><h3>Cronología</h3><p>Anota frecuencia, duración y cambios relevantes.</p></div>
+        <div class="feature-card"><div class="card-icon"><Icon name="heart" /></div><h3>Medicamentos</h3><p>Lleva una lista actual, si corresponde.</p></div>
+        <div class="feature-card"><div class="card-icon"><Icon name="brain" /></div><h3>Estudios previos</h3><p>Pregunta cuáles debes llevar y en qué formato.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-soft">
+    <div class="container content-split">
+      <div>
+        <p class="eyebrow">Si te indicaron un estudio</p>
+        <h2>Confirma antes de acudir</h2>
+        <ul class="check-list">
+          <li>Nombre exacto del estudio y protocolo.</li>
+          <li>Fecha, hora y duración aproximada.</li>
+          <li>Preparación oficial y medicamentos que deban comentarse.</li>
+          <li>Si necesitas orden médica, acompañante o estudios previos.</li>
+          <li>Cómo y cuándo se entregan los resultados.</li>
+        </ul>
+      </div>
+      <div class="content-panel">
+        <h2>Evita enviar datos sensibles</h2>
+        <p>El formulario general no debe utilizarse para expedientes, imágenes diagnósticas, CURP, recetas ni historias clínicas detalladas. Espera instrucciones de un canal oficial.</p>
+      </div>
+    </div>
+  </section>
+  <CtaBand />
+</BaseLayout>
