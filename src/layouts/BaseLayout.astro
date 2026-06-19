@@ -17,7 +17,7 @@ interface Props {
 const {
   title,
   description,
-  image = '/images/og-default.svg',
+  image = '/images/og-default.png',
   noindex = false,
   pageType = 'page',
   schema
@@ -59,8 +59,8 @@ const schemas = schema ? [baseSchema, ...(Array.isArray(schema) ? schema : [sche
     <meta property="og:url" content={canonical} />
     <meta property="og:image" content={new URL(withBase(image), Astro.site)} />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="theme-color" content="#003166" />
-    <link rel="icon" href={withBase('/favicon.svg')} type="image/svg+xml" />
+    <meta name="theme-color" content="#1c5476" />
+    <link rel="icon" href={withBase('/images/unne-symbol.png')} type="image/png" />
     <script is:inline type="application/ld+json" set:html={JSON.stringify(schemas)} />
   </head>
   <body data-page-type={pageType}>
